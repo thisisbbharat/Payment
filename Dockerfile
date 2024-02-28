@@ -4,15 +4,17 @@ FROM python:3.9-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the backend code into the container
-COPY . .
+# Copy the dependencies file to the working directory
+COPY requirements.txt .
 
-# Install dependencies
-COPY requirements.txt /app/requirements.txt
+# Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port the app runs on
+# Copy the content of the local src directory to the working directory
+COPY . .
+
+# Expose port 5000 to the outside world
 EXPOSE 5000
 
-# Command to run the backend server
+# Command to run the Flask application
 CMD ["python", "app.py"]
